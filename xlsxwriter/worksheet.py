@@ -1818,7 +1818,10 @@ class Worksheet(xmlwriter.XMLwriter):
                     options['value'] = "%.16g" % date_time
 
             if options['maximum']:
-                if not supported_datetime(options['maximum']):
+                if isinstance(options['maximum'],str) and options['maximum'][0] == '=':
+                    # Do nothing as this is a formula                    
+                    pass
+                elif not supported_datetime(options['maximum']):
                     warn("Conditional format 'maximum' must be a "
                          "datetime object.")
                     return -2
